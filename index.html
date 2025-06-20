@@ -625,7 +625,7 @@
             <div class="text-center">
                 <i class="fas fa-check-circle text-5xl text-green-500 mb-4"></i>
                 <h3 class="text-2xl font-bold mb-2">Agendamento Confirmado!</h3>
-                <p class="text-gray-700 mb-6">Seu horário foi reservado com sucesso. Enviamos os detalhes para seu e-mail.</p>
+                <p class="text-gray-700 mb-6">Seu horário foi reservado com sucesso! Enviamos um e-mail de confirmação para <span id="client-email" class="font-semibold"></span> com todos os detalhes.</p>
                 <button id="close-modal" class="bg-amber-500 hover:bg-amber-600 text-black font-bold px-6 py-2 rounded-lg transition">
                     Fechar
                 </button>
@@ -688,16 +688,71 @@
         const bookingModal = document.getElementById('booking-modal');
         const closeModal = document.getElementById('close-modal');
         
-        bookingForm.addEventListener('submit', (e) => {
+        async function sendConfirmationEmail(formData) {
+            try {
+                const response = await fetch('https://your-server.com/send-booking-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to send confirmation email');
+                }
+                return await response.json();
+            } catch (error) {
+                console.error('Error sending email:', error);
+                throw error;
+            }
+        }
+        
+        bookingForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            // Here you would typically send the form data to a server
-            // For this example, we'll just show the success modal
-            bookingModal.classList.remove('hidden');
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                date: document.getElementById('date').value,
+                time: document.getElementById('time').value,
+                service: document.getElementById('service').value,
+                barber: document.getElementById('barber').value,
+                notes: document.getElementById('notes').value
+            };
+            
+            try {
+                // Send data to server and email
+                await sendConfirmationEmail(formData);
+                
+                // Show success modal
+                bookingModal.classList.remove('hidden');
+                
+                // Add to local schedule (for demo purposes)
+                scheduleData.push({
+                    date: formData.date,
+                    time: formData.time,
+                    client: formData.name,
+                    barber: formData.barber || 'Qualquer barbeiro',
+                    service: formData.service
+                });
+                renderSchedule();
+                
+            } catch (error) {
+                alert('Ocorreu um erro ao confirmar seu agendamento. Por favor, tente novamente ou entre em contato por telefone.');
+            }
         });
         
         closeModal.addEventListener('click', () => {
             bookingModal.classList.add('hidden');
+            bookingForm.reset(); // Reset form after successful booking
+        });
+
+        // Update modal with client email when shown
+        bookingModal.addEventListener('show', () => {
+            const email = document.getElementById('email').value;
+            document.getElementById('client-email').textContent = email;
         });
         
         // Barber Schedule Functionality
