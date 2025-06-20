@@ -96,7 +96,7 @@
     <!-- Hero Section -->
     <section id="home" class="hero text-white py-20 md:py-32">
         <div class="container mx-auto px-4 text-center animate-fade-in">
-            <h1 class="text-4xl md:text-6xl font-bold mb-6">A Arte da Barbearia Tradicional.</h1>
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">A Arte da Barbearia Tradicional</h1>
             <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">Cortes de cabelo e barba precisos em um ambiente masculino clássico. Experiência premium para o homem moderno.</p>
             <div class="flex flex-col md:flex-row justify-center gap-4">
                 <a href="#booking" class="bg-amber-500 hover:bg-amber-600 text-black font-bold px-8 py-3 rounded-full transition">
@@ -528,6 +528,52 @@
         </div>
     </section>
 
+    <!-- Barber Schedule Section -->
+    <section id="schedule" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 animate-fade-in">
+                <h2 class="text-3xl font-bold mb-4">Agenda dos <span class="text-amber-500">Barbeiros</span></h2>
+                <p class="text-gray-700 max-w-2xl mx-auto">Visualize os agendamentos marcados para cada barbeiro.</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden animate-fade-in delay-100">
+                <div class="p-6 border-b">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-xl font-bold">Filtrar por Barbeiro:</h3>
+                        <select id="barber-filter" class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            <option value="all">Todos os Barbeiros</option>
+                            <option value="Elizeu Santos">Elizeu Santos</option>
+                            <option value="Lucas Oliveira">Lucas Oliveira</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Horário</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cliente</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Barbeiro</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Serviço</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200" id="schedule-body">
+                            <!-- Agendamentos serão carregados aqui via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="p-4 bg-gray-50 text-center">
+                    <button id="load-more" class="text-amber-500 hover:text-amber-600 font-semibold">
+                        Carregar mais agendamentos
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Newsletter Section -->
     <section class="py-12 bg-gray-100">
         <div class="container mx-auto px-4 text-center">
@@ -654,6 +700,67 @@
             bookingModal.classList.add('hidden');
         });
         
+        // Barber Schedule Functionality
+        const scheduleData = [
+            {
+                date: '2023-12-15',
+                time: '10:00',
+                client: 'Roberto Silva',
+                barber: 'Elizeu Santos',
+                service: 'Corte de Cabelo'
+            },
+            {
+                date: '2023-12-15',
+                time: '14:00',
+                client: 'Marcos Oliveira',
+                barber: 'Lucas Oliveira',
+                service: 'Barba Completa'
+            },
+            {
+                date: '2023-12-16',
+                time: '11:00',
+                client: 'Gustavo Pereira',
+                barber: 'Elizeu Santos',
+                service: 'Pacote Premium'
+            },
+            {
+                date: '2023-12-16',
+                time: '15:00',
+                client: 'Carlos Mendes',
+                barber: 'Lucas Oliveira',
+                service: 'Corte de Cabelo'
+            }
+        ];
+
+        function renderSchedule(barber = 'all') {
+            const scheduleBody = document.getElementById('schedule-body');
+            scheduleBody.innerHTML = '';
+
+            const filteredData = barber === 'all' 
+                ? scheduleData 
+                : scheduleData.filter(item => item.barber === barber);
+
+            filteredData.forEach(appointment => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-50';
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">${new Date(appointment.date).toLocaleDateString('pt-BR')}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${appointment.time}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${appointment.client}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${appointment.barber}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${appointment.service}</td>
+                `;
+                scheduleBody.appendChild(row);
+            });
+        }
+
+        document.getElementById('barber-filter').addEventListener('change', (e) => {
+            renderSchedule(e.target.value);
+        });
+
+        // Initial render
+        renderSchedule();
+
         // Animate elements when they come into view
         const animateOnScroll = () => {
             const elements = document.querySelectorAll('.animate-fade-in');
@@ -675,5 +782,5 @@
         // Then run on scroll
         window.addEventListener('scroll', animateOnScroll);
     </script>
-<p style="border-radius: 8px; text-align: center; font-size: 12px; color: #fff; margin-top: 16px;position: fixed; left: 8px; bottom: 8px; z-index: 10; background: rgba(0, 0, 0, 0.8); padding: 4px 8px;">Made with <img src="https://enzostvs-deepsite.hf.space/logo.svg" alt="DeepSite Logo" style="width: 16px; height: 16px; vertical-align: middle;display:inline-block;margin-right:3px;filter:brightness(0) invert(1);"><a href="https://enzostvs-deepsite.hf.space" style="color: #fff;text-decoration: underline;" target="_blank" >DeepSite</a> - 🧬 <a href="https://enzostvs-deepsite.hf.space?remix=Dev-Slavick/barbearia" style="color: #fff;text-decoration: underline;" target="_blank" >Remix</a></p></body>
+</body>
 </html>
