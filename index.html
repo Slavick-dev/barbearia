@@ -1,19 +1,679 @@
-<!doctype html>
-<html>
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<title>My static Space</title>
-		<link rel="stylesheet" href="style.css" />
-	</head>
-	<body>
-		<div class="card">
-			<h1>Welcome to your static Space!</h1>
-			<p>You can modify this app directly by editing <i>index.html</i> in the Files and versions tab.</p>
-			<p>
-				Also don't forget to check the
-				<a href="https://huggingface.co/docs/hub/spaces" target="_blank">Spaces documentation</a>.
-			</p>
-		</div>
-	</body>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbearia Modelo - Corte Tradicional</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom CSS for elements that need more specific styling */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80') no-repeat center center;
+            background-size: cover;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .barber-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .testimonial-card {
+            background: linear-gradient(145deg, #f3f4f6, #e5e7eb);
+        }
+        
+        .booking-form {
+            background: linear-gradient(135deg, #1a202c, #2d3748);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        .delay-100 {
+            animation-delay: 0.1s;
+        }
+        
+        .delay-200 {
+            animation-delay: 0.2s;
+        }
+        
+        .delay-300 {
+            animation-delay: 0.3s;
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-100">
+    <!-- Header/Navigation -->
+    <header class="bg-black text-white sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <i class="fas fa-cut text-amber-500 text-3xl mr-2"></i>
+                <h1 class="text-2xl font-bold">Barbearia<span class="text-amber-500">Modelo</span></h1>
+            </div>
+            
+            <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+            
+            <nav class="hidden md:flex space-x-8">
+                <a href="#home" class="hover:text-amber-500 transition">Início</a>
+                <a href="#services" class="hover:text-amber-500 transition">Serviços</a>
+                <a href="#barbers" class="hover:text-amber-500 transition">Barbeiros</a>
+                <a href="#testimonials" class="hover:text-amber-500 transition">Depoimentos</a>
+                <a href="#contact" class="hover:text-amber-500 transition">Contato</a>
+            </nav>
+            
+            <a href="#booking" class="hidden md:block bg-amber-500 hover:bg-amber-600 text-black font-bold px-6 py-2 rounded-full transition">
+                Agendar
+            </a>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black text-white py-4 px-4">
+            <div class="flex flex-col space-y-4">
+                <a href="#home" class="hover:text-amber-500 transition">Início</a>
+                <a href="#services" class="hover:text-amber-500 transition">Serviços</a>
+                <a href="#barbers" class="hover:text-amber-500 transition">Barbeiros</a>
+                <a href="#testimonials" class="hover:text-amber-500 transition">Depoimentos</a>
+                <a href="#contact" class="hover:text-amber-500 transition">Contato</a>
+                <a href="#booking" class="bg-amber-500 hover:bg-amber-600 text-black font-bold px-6 py-2 rounded-full text-center transition">
+                    Agendar
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero text-white py-20 md:py-32">
+        <div class="container mx-auto px-4 text-center animate-fade-in">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">A Arte da Barbearia Tradicional</h1>
+            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">Cortes de cabelo e barba precisos em um ambiente masculino clássico. Experiência premium para o homem moderno.</p>
+            <div class="flex flex-col md:flex-row justify-center gap-4">
+                <a href="#booking" class="bg-amber-500 hover:bg-amber-600 text-black font-bold px-8 py-3 rounded-full transition">
+                    Agende Agora
+                </a>
+                <a href="#services" class="bg-transparent hover:bg-white hover:text-black border-2 border-white font-bold px-8 py-3 rounded-full transition">
+                    Nossos Serviços
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8 animate-fade-in delay-100">
+                    <img src="https://images.unsplash.com/photo-1585747860715-6ba6e32a7b33?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                         alt="Interior da barbearia" 
+                         class="rounded-lg shadow-xl w-full h-auto">
+                </div>
+                <div class="md:w-1/2 animate-fade-in delay-200">
+                    <h2 class="text-3xl font-bold mb-6">Sobre a <span class="text-amber-500">Barbearia Modelo</span></h2>
+                    <p class="text-gray-700 mb-4">Fundada em 2010, a Barbearia Clássica resgata a tradição das antigas barbearias com um toque moderno. Nosso espaço foi cuidadosamente projetado para oferecer conforto e exclusividade.</p>
+                    <p class="text-gray-700 mb-6">Nossos barbeiros são especialistas em cortes clássicos e modernos, sempre utilizando as melhores técnicas e produtos de qualidade premium.</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-amber-500 mr-2"></i>
+                            <span>Atendimento Personalizado</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-amber-500 mr-2"></i>
+                            <span>Produtos Premium</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-amber-500 mr-2"></i>
+                            <span>Ambiente Exclusivo</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-amber-500 mr-2"></i>
+                            <span>Barbeiros Certificados</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 animate-fade-in">
+                <h2 class="text-3xl font-bold mb-4">Nossos <span class="text-amber-500">Serviços</span></h2>
+                <p class="text-gray-700 max-w-2xl mx-auto">Oferecemos uma variedade de serviços para cuidar do seu visual com a máxima qualidade e atenção aos detalhes.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300 animate-fade-in delay-100">
+                    <div class="h-48 bg-amber-100 flex items-center justify-center">
+                        <i class="fas fa-scissors text-6xl text-amber-500"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Corte de Cabelo</h3>
+                        <p class="text-gray-700 mb-4">Corte profissional com técnicas tradicionais ou modernas, conforme sua preferência.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">R$ 60,00</span>
+                            <button class="text-amber-500 hover:text-amber-600 font-semibold">Agendar</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300 animate-fade-in delay-200">
+                    <div class="h-48 bg-amber-100 flex items-center justify-center">
+                        <i class="fas fa-razor text-6xl text-amber-500"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Barba Completa</h3>
+                        <p class="text-gray-700 mb-4">Aparo, modelagem e finalização com navalha, incluindo hidratação e cuidados com a pele.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">R$ 45,00</span>
+                            <button class="text-amber-500 hover:text-amber-600 font-semibold">Agendar</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300 animate-fade-in delay-300">
+                    <div class="h-48 bg-amber-100 flex items-center justify-center">
+                        <i class="fas fa-spa text-6xl text-amber-500"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Pacote Premium</h3>
+                        <p class="text-gray-700 mb-4">Corte + barba + massagem capilar + tratamento facial. Experiência completa de cuidados.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">R$ 120,00</span>
+                            <button class="text-amber-500 hover:text-amber-600 font-semibold">Agendar</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 4 -->
+                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300 animate-fade-in delay-100">
+                    <div class="h-48 bg-amber-100 flex items-center justify-center">
+                        <i class="fas fa-child text-6xl text-amber-500"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Corte Infantil</h3>
+                        <p class="text-gray-700 mb-4">Corte especial para crianças, com ambiente lúdico e profissionais especializados.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">R$ 40,00</span>
+                            <button class="text-amber-500 hover:text-amber-600 font-semibold">Agendar</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 5 -->
+                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300 animate-fade-in delay-200">
+                    <div class="h-48 bg-amber-100 flex items-center justify-center">
+                        <i class="fas fa-paint-brush text-6xl text-amber-500"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Coloração</h3>
+                        <p class="text-gray-700 mb-4">Técnicas profissionais de coloração para cabelo e barba, com produtos de alta qualidade.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">R$ 80,00</span>
+                            <button class="text-amber-500 hover:text-amber-600 font-semibold">Agendar</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Service 6 -->
+                <div class="service-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300 animate-fade-in delay-300">
+                    <div class="h-48 bg-amber-100 flex items-center justify-center">
+                        <i class="fas fa-gift text-6xl text-amber-500"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Vale Presente</h3>
+                        <p class="text-gray-700 mb-4">Presenteie alguém especial com uma experiência premium na Barbearia Clássica.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-lg">A partir de R$ 60,00</span>
+                            <button class="text-amber-500 hover:text-amber-600 font-semibold">Comprar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Barbers Section -->
+    <section id="barbers" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 animate-fade-in">
+                <h2 class="text-3xl font-bold mb-4">Nossos <span class="text-amber-500">Barbeiros</span></h2>
+                <p class="text-gray-700 max-w-2xl mx-auto">Profissionais experientes e apaixonados por sua arte, prontos para oferecer o melhor serviço.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Barber 1 -->
+                <div class="barber-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300 animate-fade-in delay-100">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1583864697784-a0ef4b2f3e4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
+                             alt="Barbeiro Elizeu" 
+                             class="w-full h-full object-cover transition duration-300">
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="text-xl font-bold mb-1">Elizeu Santos</h3>
+                        <p class="text-amber-500 font-semibold mb-3">Barbeiro Sênior</p>
+                        <p class="text-gray-700 mb-4">10 anos de experiência em cortes clássicos e modernos. Especialista em barbas.</p>
+                        <div class="flex justify-center space-x-4">
+                            <a href="#" class="text-gray-500 hover:text-amber-500"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="text-gray-500 hover:text-amber-500"><i class="fab fa-facebook"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Barber 2 -->
+                <div class="barber-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300 animate-fade-in delay-200">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1562788869-4ed32648eb72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80" 
+                             alt="Barbeiro Lucas" 
+                             class="w-full h-full object-cover transition duration-300">
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="text-xl font-bold mb-1">Lucas Oliveira</h3>
+                        <p class="text-amber-500 font-semibold mb-3">Barbeiro Júnior</p>
+                        <p class="text-gray-700 mb-4">Promessa da barbearia. Técnicas modernas e atendimento acolhedor.</p>
+                        <div class="flex justify-center space-x-4">
+                            <a href="#" class="text-gray-500 hover:text-amber-500"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="text-gray-500 hover:text-amber-500"><i class="fab fa-facebook"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 animate-fade-in">
+                <h2 class="text-3xl font-bold mb-4">Depoimentos de <span class="text-amber-500">Clientes</span></h2>
+                <p class="text-gray-700 max-w-2xl mx-auto">O que nossos clientes dizem sobre a experiência na Barbearia Clássica.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card rounded-lg p-6 shadow-md animate-fade-in delay-100">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Cliente" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Roberto Santos</h4>
+                            <div class="flex text-amber-500">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700">"Melhor barbearia da cidade! O João é um artista com a navalha. Nunca saí tão satisfeito com um corte e barba. Ambiente incrível e atendimento impecável."</p>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card rounded-lg p-6 shadow-md animate-fade-in delay-200">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://randomuser.me/api/portraits/men/44.jpg" alt="Cliente" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Marcos Ferreira</h4>
+                            <div class="flex text-amber-500">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700">"O Carlos transformou meu visual completamente. Depois de anos sem saber qual corte combinava comigo, ele acertou na mosca. Agora só venho aqui!"</p>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card rounded-lg p-6 shadow-md animate-fade-in delay-300">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://randomuser.me/api/portraits/men/68.jpg" alt="Cliente" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Gustavo Lima</h4>
+                            <div class="flex text-amber-500">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700">"Levo meu filho de 5 anos para cortar o cabelo aqui e ele adora! Os barbeiros têm uma paciência incrível com crianças. O espaço infantil é muito bem pensado."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="booking" class="py-16 booking-form text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
+                <div class="md:flex">
+                    <div class="md:w-1/2 bg-amber-500 p-8 flex flex-col justify-center">
+                        <h2 class="text-3xl font-bold mb-6 text-black">Agende Seu Horário</h2>
+                        <p class="text-black mb-6">Preencha o formulário ao lado para reservar seu horário na Barbearia Modelo. Entraremos em contato para confirmar.</p>
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-phone-alt mr-3 text-black"></i>
+                            <span class="text-black">(11) 98765-4321</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-black"></i>
+                            <span class="text-black">contato@barbeariamodelo.com</span>
+                        </div>
+                    </div>
+                    
+                    <div class="md:w-1/2 p-8 text-gray-800">
+                        <form id="booking-form" class="space-y-4">
+                            <div>
+                                <label for="name" class="block mb-1">Nome Completo</label>
+                                <input type="text" id="name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            </div>
+                            
+                            <div>
+                                <label for="phone" class="block mb-1">Telefone</label>
+                                <input type="tel" id="phone" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            </div>
+                            
+                            <div>
+                                <label for="email" class="block mb-1">E-mail</label>
+                                <input type="email" id="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label for="date" class="block mb-1">Data</label>
+                                    <input type="date" id="date" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                </div>
+                                <div>
+                                    <label for="time" class="block mb-1">Horário</label>
+                                    <select id="time" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                        <option value="">Selecione</option>
+                                        <option value="09:00">09:00</option>
+                                        <option value="10:00">10:00</option>
+                                        <option value="11:00">11:00</option>
+                                        <option value="13:00">13:00</option>
+                                        <option value="14:00">14:00</option>
+                                        <option value="15:00">15:00</option>
+                                        <option value="16:00">16:00</option>
+                                        <option value="17:00">17:00</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label for="service" class="block mb-1">Serviço</label>
+                                <select id="service" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                    <option value="">Selecione um serviço</option>
+                                    <option value="Corte de Cabelo">Corte de Cabelo - R$60,00</option>
+                                    <option value="Barba Completa">Barba Completa - R$45,00</option>
+                                    <option value="Pacote Premium">Pacote Premium - R$120,00</option>
+                                    <option value="Corte Infantil">Corte Infantil - R$40,00</option>
+                                    <option value="Coloração">Coloração - R$80,00</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="barber" class="block mb-1">Barbeiro</label>
+                                <select id="barber" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                    <option value="">Qualquer barbeiro</option>
+                                    <option value="Elizeu Santos">Elizeu Santos</option>
+                                    <option value="Lucas Oliveira">Lucas Oliveira</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="notes" class="block mb-1">Observações</label>
+                                <textarea id="notes" rows="3" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
+                            </div>
+                            
+                            <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-black font-bold py-3 px-4 rounded-lg transition">
+                                Confirmar Agendamento
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Location Section -->
+    <section id="contact" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 animate-fade-in">
+                <h2 class="text-3xl font-bold mb-4">Contato & <span class="text-amber-500">Localização</span></h2>
+                <p class="text-gray-700 max-w-2xl mx-auto">Venha nos visitar em nosso espaço exclusivo no coração da cidade.</p>
+            </div>
+            
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/2 animate-fade-in delay-100">
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-md h-full">
+                        <h3 class="text-xl font-bold mb-4">Informações de Contato</h3>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-map-marker-alt text-amber-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-semibold">Endereço</h4>
+                                    <p class="text-gray-700">Rua das Barbearias, 123<br>Centro - São Paulo/SP<br>CEP: 01001-000</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <i class="fas fa-phone-alt text-amber-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-semibold">Telefone</h4>
+                                    <p class="text-gray-700">(11) 98765-4321</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <i class="fas fa-envelope text-amber-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-semibold">E-mail</h4>
+                                    <p class="text-gray-700">contato@barbeariaclassica.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <i class="fas fa-clock text-amber-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-semibold">Horário de Funcionamento</h4>
+                                    <p class="text-gray-700">
+                                        Segunda a Sexta: 9h às 19h<br>
+                                        Sábado: 9h às 17h<br>
+                                        Domingo: Fechado
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2 animate-fade-in delay-200">
+                    <div class="h-full rounded-lg overflow-hidden shadow-md">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.0754267452926!2d-46.65342658447538!3d-23.565734367638952!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c8da0aa315%3A0xd59f9431f2c9776!2sAv.%20Paulista%2C%20S%C3%A3o%20Paulo%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1629913155932!5m2!1spt-BR!2sbr" 
+                                width="100%" 
+                                height="100%" 
+                                style="min-height: 400px; border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy"
+                                class="rounded-lg">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-12 bg-gray-100">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-2xl font-bold mb-4 animate-fade-in">Assine Nossa <span class="text-amber-500">Newsletter</span></h2>
+            <p class="text-gray-700 mb-6 max-w-2xl mx-auto animate-fade-in delay-100">Receba promoções exclusivas, dicas de cuidados e novidades da Barbearia Clássica diretamente no seu e-mail.</p>
+            
+            <form class="max-w-md mx-auto flex animate-fade-in delay-200">
+                <input type="email" placeholder="Seu melhor e-mail" class="flex-grow px-4 py-2 rounded-l-lg border focus:outline-none focus:ring-2 focus:ring-amber-500">
+                <button type="submit" class="bg-amber-500 hover:bg-amber-600 text-black font-bold px-6 py-2 rounded-r-lg transition">
+                    Assinar
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center">
+                        <i class="fas fa-cut text-amber-500 text-2xl mr-2"></i>
+                        <h2 class="text-xl font-bold">Barbearia<span class="text-amber-500">Modelo</span></h2>
+                    </div>
+                    <p class="text-gray-400 mt-2">A arte da barbearia tradicional.</p>
+                </div>
+                
+                <div class="flex space-x-6 mb-6 md:mb-0">
+                    <a href="#" class="text-gray-400 hover:text-amber-500 transition"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-amber-500 transition"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-amber-500 transition"><i class="fab fa-whatsapp"></i></a>
+                </div>
+                
+                <div class="text-gray-400 text-sm">
+                    <p>&copy; 2023 Barbearia Modelo. Todos os direitos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 bg-amber-500 hover:bg-amber-600 text-black w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition opacity-0 invisible">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Booking Success Modal -->
+    <div id="booking-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+            <div class="text-center">
+                <i class="fas fa-check-circle text-5xl text-green-500 mb-4"></i>
+                <h3 class="text-2xl font-bold mb-2">Agendamento Confirmado!</h3>
+                <p class="text-gray-700 mb-6">Seu horário foi reservado com sucesso. Enviamos os detalhes para seu e-mail.</p>
+                <button id="close-modal" class="bg-amber-500 hover:bg-amber-600 text-black font-bold px-6 py-2 rounded-lg transition">
+                    Fechar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Smooth Scrolling for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // Close mobile menu if open
+                mobileMenu.classList.add('hidden');
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Back to Top Button
+        const backToTopButton = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Booking Form Submission
+        const bookingForm = document.getElementById('booking-form');
+        const bookingModal = document.getElementById('booking-modal');
+        const closeModal = document.getElementById('close-modal');
+        
+        bookingForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Here you would typically send the form data to a server
+            // For this example, we'll just show the success modal
+            bookingModal.classList.remove('hidden');
+        });
+        
+        closeModal.addEventListener('click', () => {
+            bookingModal.classList.add('hidden');
+        });
+        
+        // Animate elements when they come into view
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.animate-fade-in');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                
+                if (elementPosition < screenPosition) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+        
+        // Run once on page load
+        animateOnScroll();
+        
+        // Then run on scroll
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+<p style="border-radius: 8px; text-align: center; font-size: 12px; color: #fff; margin-top: 16px;position: fixed; left: 8px; bottom: 8px; z-index: 10; background: rgba(0, 0, 0, 0.8); padding: 4px 8px;">Made with <img src="https://enzostvs-deepsite.hf.space/logo.svg" alt="DeepSite Logo" style="width: 16px; height: 16px; vertical-align: middle;display:inline-block;margin-right:3px;filter:brightness(0) invert(1);"><a href="https://enzostvs-deepsite.hf.space" style="color: #fff;text-decoration: underline;" target="_blank" >DeepSite</a> - 🧬 <a href="https://enzostvs-deepsite.hf.space?remix=Dev-Slavick/barbearia" style="color: #fff;text-decoration: underline;" target="_blank" >Remix</a></p></body>
 </html>
